@@ -2,6 +2,7 @@ package com.rogelioorts.com.blog.exaple.code.test.developer.one.simple.map;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -56,8 +57,19 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V remove(Object key) {
-		// TODO Auto-generated method stub
-		return null;
+		V result = null;
+		Iterator<SimpleEntry> it = entries.iterator();
+		
+		while (it.hasNext()) {
+			SimpleEntry entry = it.next();
+			if(Objects.equals(entry.getKey(), key)) {
+				it.remove();
+				result = entry.getValue();
+				break;
+			}
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -92,7 +104,7 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 	
 	public class SimpleEntry implements Entry<K, V> {
 		
-		private K key;
+		private final K key;
 		
 		private V value;
 		
