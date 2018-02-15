@@ -8,5 +8,13 @@
   <name>Blog Posts Code</name>
   <description>Snippets and example projects to illustrate blog posts.</description>
   <url>http://rogelioorts.com</url>
+  
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
 
+  <modules>
+  	<module>test-developer-1</module>
+  </modules>
 </project>
