@@ -25,7 +25,15 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
 	@Override
 	public int size() {
-		return table.length;
+		int result = 0;
+		
+		for (int i = 0; i < table.length; ++i) {
+            for (MyEntry<K,V> e = table[i]; e != null; e = e.next) {
+                result++;
+            }
+        }
+		
+		return result;
 	}
 
 	@Override
