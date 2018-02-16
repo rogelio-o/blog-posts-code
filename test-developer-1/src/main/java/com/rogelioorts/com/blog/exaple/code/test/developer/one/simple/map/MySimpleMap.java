@@ -50,9 +50,10 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V put(K key, V value) {
+		V oldValue = get(key);
 		entries.add(new SimpleEntry(key, value));
 		
-		return value;
+		return oldValue;
 	}
 
 	@Override
@@ -129,9 +130,10 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 
 		@Override
 		public V setValue(V value) {
+			V oldValue = this.value;
 			this.value = value;
 			
-			return this.value;
+			return oldValue;
 		}
 		
 	}
