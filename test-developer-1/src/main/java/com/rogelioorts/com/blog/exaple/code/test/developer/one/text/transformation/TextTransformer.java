@@ -1,6 +1,10 @@
 package com.rogelioorts.com.blog.exaple.code.test.developer.one.text.transformation;
 
+
 public class TextTransformer {
+	
+	private static final char PATTERN_START = '[';
+	private static final char PATTERN_END = ']';
 	
 	public String decompress(String text) {
 		return this.decompress(text, 0, 1).getText();
@@ -13,10 +17,10 @@ public class TextTransformer {
 		for(int t = 0; t < times; t++) {
 			i = index;
 			char c;
-			while(i < text.length() && (c = text.charAt(i)) != ']') {
+			while(i < text.length() && (c = text.charAt(i)) != PATTERN_START) {
 				if(isNumeric(c)) {
 					int newTimes = 0;
-					while(i < text.length() && (c = text.charAt(i)) != '[') {
+					while(i < text.length() && (c = text.charAt(i)) != PATTERN_END) {
 						newTimes = (newTimes * 10) + Integer.valueOf(String.valueOf(c));
 						i++;
 					}
