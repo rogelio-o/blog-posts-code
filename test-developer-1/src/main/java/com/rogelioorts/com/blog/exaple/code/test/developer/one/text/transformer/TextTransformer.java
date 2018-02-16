@@ -3,8 +3,8 @@ package com.rogelioorts.com.blog.exaple.code.test.developer.one.text.transformer
 
 public class TextTransformer {
 	
-	private static final char PATTERN_START = '[';
-	private static final char PATTERN_END = ']';
+	private static final char PATTERN_START = '(';
+	private static final char PATTERN_END = ')';
 	
 	public String decompress(String text) {
 		return this.decompress(text, 0, 1).getText();

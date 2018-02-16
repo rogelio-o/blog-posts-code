@@ -20,17 +20,17 @@ public class TextTransformerTest {
 	
 	@Test
 	public void checkSimpleDecompress() {
-		Assert.assertEquals("abab", transformer.decompress("2[ab]"));
+		Assert.assertEquals("abab", transformer.decompress("2(ab)"));
 	}
 	
 	@Test
 	public void checkSimpleDecompressWithTail() {
-		Assert.assertEquals("ababcd", transformer.decompress("2[ab]cd"));
+		Assert.assertEquals("ababcd", transformer.decompress("2(ab)cd"));
 	}
 	
 	@Test
 	public void checkNestedDecompress() {
-		Assert.assertEquals("abccccabcccc", transformer.decompress("2[ab4[c]]"));
+		Assert.assertEquals("abccccabcccc", transformer.decompress("2(ab4(c))"));
 	}
 	
 }
