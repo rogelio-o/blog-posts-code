@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class MySimpleMap<K, V> implements Map<K, V> {
 	
-	private List<SimpleEntry> entries;
+	private List<SimpleEntry<K,V>> entries;
 	
 	public MySimpleMap() {
 		entries = new ArrayList<>();
@@ -43,26 +43,39 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V get(Object key) {
+		SimpleEntry<K,V> entry = findEntry(key);
+		return entry == null ? null : entry.value;
+	}
+	
+	private SimpleEntry<K,V> findEntry(Object key) {
 		return entries.stream()
 				.filter(e -> Objects.equals(e.getKey(), key))
-				.findFirst().map(e -> e.getValue()).orElse(null);
+				.findFirst().orElse(null);
 	}
 
 	@Override
 	public V put(K key, V value) {
-		V oldValue = get(key);
-		entries.add(new SimpleEntry(key, value));
+		SimpleEntry<K,V> oldEntry = findEntry(key);
 		
-		return oldValue;
+		if(oldEntry == null) {
+			entries.add(new SimpleEntry<>(key, value));
+			
+			return null;
+		} else {
+			V oldValue = oldEntry.value;
+			oldEntry.value = value;
+		
+			return oldValue;
+		}
 	}
 
 	@Override
 	public V remove(Object key) {
 		V result = null;
-		Iterator<SimpleEntry> it = entries.iterator();
+		Iterator<SimpleEntry<K,V>> it = entries.iterator();
 		
 		while (it.hasNext()) {
-			SimpleEntry entry = it.next();
+			SimpleEntry<K,V> entry = it.next();
 			if(Objects.equals(entry.getKey(), key)) {
 				it.remove();
 				result = entry.getValue();
@@ -75,8 +88,8 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 
 	@Override
 	public void putAll(Map<? extends K, ? extends V> m) {
-		List<SimpleEntry> simpleEntries = m.entrySet().stream()
-				.map(SimpleEntry::new).collect(Collectors.toList());
+		List<SimpleEntry<K,V>> simpleEntries = m.entrySet().stream()
+				.map(SimpleEntry<K,V>::new).collect(Collectors.toList());
 		entries.addAll(simpleEntries);
 	}
 
@@ -103,7 +116,7 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 				.collect(Collectors.toSet());
 	}
 	
-	public class SimpleEntry implements Entry<K, V> {
+	public static class SimpleEntry<K,V> implements Entry<K,V> {
 		
 		private final K key;
 		

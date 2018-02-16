@@ -1,4 +1,4 @@
-package com.rogelioorts.com.blog.exaple.code.test.developer.one.text.transformation;
+package com.rogelioorts.com.blog.exaple.code.test.developer.one.text.transformer;
 
 
 public class TextTransformer {
@@ -17,10 +17,10 @@ public class TextTransformer {
 		for(int t = 0; t < times; t++) {
 			i = index;
 			char c;
-			while(i < text.length() && (c = text.charAt(i)) != PATTERN_START) {
+			while(i < text.length() && (c = text.charAt(i)) != PATTERN_END) {
 				if(isNumeric(c)) {
 					int newTimes = 0;
-					while(i < text.length() && (c = text.charAt(i)) != PATTERN_END) {
+					while(i < text.length() && (c = text.charAt(i)) != PATTERN_START) {
 						newTimes = (newTimes * 10) + Integer.valueOf(String.valueOf(c));
 						i++;
 					}
