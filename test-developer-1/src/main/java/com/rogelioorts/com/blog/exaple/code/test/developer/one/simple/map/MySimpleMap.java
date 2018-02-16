@@ -43,17 +43,30 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V get(Object key) {
+		SimpleEntry<K,V> entry = findEntry(key);
+		return entry == null ? null : entry.value;
+	}
+	
+	private SimpleEntry<K,V> findEntry(Object key) {
 		return entries.stream()
 				.filter(e -> Objects.equals(e.getKey(), key))
-				.findFirst().map(e -> e.getValue()).orElse(null);
+				.findFirst().orElse(null);
 	}
 
 	@Override
 	public V put(K key, V value) {
-		V oldValue = get(key);
-		entries.add(new SimpleEntry<>(key, value));
+		SimpleEntry<K,V> oldEntry = findEntry(key);
 		
-		return oldValue;
+		if(oldEntry == null) {
+			entries.add(new SimpleEntry<>(key, value));
+			
+			return null;
+		} else {
+			V oldValue = oldEntry.value;
+			oldEntry.value = value;
+		
+			return oldValue;
+		}
 	}
 
 	@Override
