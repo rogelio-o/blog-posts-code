@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class MySimpleMap<K, V> implements Map<K, V> {
 	
-	private List<SimpleEntry> entries;
+	private List<SimpleEntry<K,V>> entries;
 	
 	public MySimpleMap() {
 		entries = new ArrayList<>();
@@ -51,7 +51,7 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 	@Override
 	public V put(K key, V value) {
 		V oldValue = get(key);
-		entries.add(new SimpleEntry(key, value));
+		entries.add(new SimpleEntry<>(key, value));
 		
 		return oldValue;
 	}
@@ -59,10 +59,10 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 	@Override
 	public V remove(Object key) {
 		V result = null;
-		Iterator<SimpleEntry> it = entries.iterator();
+		Iterator<SimpleEntry<K,V>> it = entries.iterator();
 		
 		while (it.hasNext()) {
-			SimpleEntry entry = it.next();
+			SimpleEntry<K,V> entry = it.next();
 			if(Objects.equals(entry.getKey(), key)) {
 				it.remove();
 				result = entry.getValue();
@@ -75,8 +75,8 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 
 	@Override
 	public void putAll(Map<? extends K, ? extends V> m) {
-		List<SimpleEntry> simpleEntries = m.entrySet().stream()
-				.map(SimpleEntry::new).collect(Collectors.toList());
+		List<SimpleEntry<K,V>> simpleEntries = m.entrySet().stream()
+				.map(SimpleEntry<K,V>::new).collect(Collectors.toList());
 		entries.addAll(simpleEntries);
 	}
 
@@ -103,7 +103,7 @@ public class MySimpleMap<K, V> implements Map<K, V> {
 				.collect(Collectors.toSet());
 	}
 	
-	public class SimpleEntry implements Entry<K, V> {
+	public static class SimpleEntry<K,V> implements Entry<K,V> {
 		
 		private final K key;
 		
