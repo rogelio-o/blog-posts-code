@@ -19,7 +19,7 @@ public class TextTransformer {
 					
 					text.next();
 				}
-				text.next(); // skip start pattern
+				text.skipPatternStart();
 				
 				String subresult = decompress(text, newTimes);
 				result.append(subresult);

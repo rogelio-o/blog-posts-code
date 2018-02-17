@@ -26,6 +26,10 @@ public class Text {
 		index++;
 	}
 	
+	public void skipPatternStart() {
+		next();
+	}
+	
 	public boolean hasNext() {
 		return index < text.length();
 	}
