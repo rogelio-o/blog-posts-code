@@ -1,5 +1,7 @@
 package com.rogelioorts.com.blog.exaple.code.test.developer.one.text.transformer;
 
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class TextTransformer {
 	
@@ -13,12 +15,8 @@ public class TextTransformer {
 
 		while(text.hasNext() && !text.isCurrentEndPattern()) {
 			if(text.isCurrentNumeric()) {
-				int newTimes = 0;
-				while(text.hasNext() && !text.isCurrentStartPattern()) {
-					newTimes = (newTimes * 10) + text.getCurrentAsInteger();
-					
-					text.next();
-				}
+				int newTimes = getPatternCopyTimes(text);
+
 				text.skipPatternStart();
 				
 				String subresult = decompress(text, newTimes);
@@ -33,13 +31,20 @@ public class TextTransformer {
 		return copyNTimes(result.toString(), times);
 	}
 	
-	private String copyNTimes(String part, int times) {
-		String result = "";
-		for(int t = 0; t < times; t++) {
-			result += part;
+	private int getPatternCopyTimes(Text text) {
+		int result = 0;
+		while(text.hasNext() && !text.isCurrentStartPattern()) {
+			result = (result * 10) + text.getCurrentAsInteger();
+			
+			text.next();
 		}
 		
 		return result;
+	}
+	
+	private String copyNTimes(String part, int times) {
+		return Collections.nCopies(times, part).stream()
+				.collect(Collectors.joining());
 	}
 	
 }
